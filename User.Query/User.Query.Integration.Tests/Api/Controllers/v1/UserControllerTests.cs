@@ -1,96 +1,87 @@
-﻿using System.Net;
+﻿using FluentAssertions;
+using System.Net;
+using System.Net.Http.Json;
+using User.Query.Communication.Response;
+using User.Query.Integration.Tests.Fakes.Request;
 
 namespace User.Query.Integration.Tests.Api.Controllers.v1;
 public class UserControllerTests() : BaseTestClient("/api/v1/user")
 {
     [Fact]
-    public async Task Login_ReturnsOk_WhenSuccessfulLogin()
+    public async Task RecoverByEmailAndPassword_ReturnsOk_WhenCorrectEmailAndPassword()
     {
         // Arrange
         var user = Factory.RecoverUser();
-        var password = Factory.RecoverPassword();
 
-        //var request = new RequestLoginJsonBuilder()
-        //    .WithEmail(user.Email)
-        //    .WithPassword(password)
-        //    .Build();
+        var request = new RequestEmailPasswordUserJsonBuilder()
+            .WithEmail(user.Email)
+            .WithPassword(user.Password)
+            .Build();
+
+        var uri = string.Concat(ControllerUri, "/recover-email-password");
 
         // Act
-        //var response = await Client.PostAsJsonAsync(ControllerUri, request);
+        var response = await Client.PostAsJsonAsync(uri, request);
 
         // Assert
-        //response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        //var loggedUserJson = await DeserializeResponse<ResponseLoginJson>(response);
+        var loggedUserJson = await DeserializeResponse<Response.Result<ResponseUserJson>>(response);
 
-        //loggedUserJson.Name.Should().NotBeNullOrWhiteSpace();
-        //loggedUserJson.Token.Should().NotBeNullOrWhiteSpace();
+        loggedUserJson.Data.Name.Should().NotBeNullOrWhiteSpace();
+        loggedUserJson.Data.Email.Should().NotBeNullOrWhiteSpace();
     }
 
-    //[Fact]
-    //public async Task Login_ReturnsUnauthorized_WhenLoginFail_IncorrectPassword()
-    //{
-    //    // Arrange
-    //    var user = Factory.RecoverUser();
+    [Fact]
+    public async Task RecoverByEmailAndPassword_ReturnsOk_WhenIncorrectEmailAndPassword()
+    {
+        // Arrange
+        var user = Factory.RecoverUser();
 
-    //    var request = new RequestLoginJsonBuilder()
-    //        .WithEmail(user.Email)
-    //        .WithPassword("incorrec-password")
-    //        .Build();
+        var request = new RequestEmailPasswordUserJsonBuilder()
+            .WithEmail("incorrect-email")
+            .WithPassword("incorrect-password")
+            .Build();
 
-    //    // Act
-    //    var response = await Client.PostAsJsonAsync(ControllerUri, request);
+        var uri = string.Concat(ControllerUri, "/recover-email-password");
 
-    //    // Assert
-    //    response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        // Act
+        var response = await Client.PostAsJsonAsync(uri, request);
 
-    //    var loggedUserJson = await DeserializeResponse<ResponseLoginJson>(response);
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-    //    loggedUserJson.Name.Should().BeNull();
-    //    loggedUserJson.Token.Should().BeNull();
-    //}
+        var loggedUserJson = await DeserializeResponse<Response.Result<ResponseUserJson>>(response);
 
-    //[Fact]
-    //public async Task Login_ReturnsUnauthorized_WhenLoginFail_IncorrectEmail()
-    //{
-    //    // Arrange
-    //    var password = Factory.RecoverPassword();
+        loggedUserJson.Data.Should().BeNull();
+        loggedUserJson.IsSuccess.Should().BeFalse();
+        loggedUserJson.Error.Equals("Invalid email or username.");
+    }
 
-    //    var request = new RequestLoginJsonBuilder()
-    //        .WithEmail("incorrec-email@email.com")
-    //        .WithPassword(password)
-    //        .Build();
+    [Fact]
+    public async Task RecoverByEmailAndPassword_ReturnsOk_WhenAnErrorOccurs()
+    {
+        // Arrange
+        var user = Factory.RecoverUser();
 
-    //    // Act
-    //    var response = await Client.PostAsJsonAsync(ControllerUri, request);
+        var request = new RequestEmailPasswordUserJsonBuilder()
+            .WithEmail("incorrect-email")
+            .WithPassword("incorrect-password")
+            .Build();
 
-    //    // Assert
-    //    response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        var uri = string.Concat(ControllerUri, "/recover-email-password");
 
-    //    var loggedUserJson = await DeserializeResponse<ResponseLoginJson>(response);
+        // Act
+        var response = await Client.PostAsJsonAsync(uri, request);
 
-    //    loggedUserJson.Name.Should().BeNull();
-    //    loggedUserJson.Token.Should().BeNull();
-    //}
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
 
-    //[Fact]
-    //public async Task Login_ReturnsUnauthorized_WhenLoginFail_IncorrectPasswordAndEmail()
-    //{
-    //    // Arrange
-    //    var request = new RequestLoginJsonBuilder()
-    //        .WithEmail("incorrec-email@email.com")
-    //        .WithPassword("incorrec-password")
-    //        .Build();
+        var loggedUserJson = await DeserializeResponse<Response.Result<ResponseUserJson>>(response);
 
-    //    // Act
-    //    var response = await Client.PostAsJsonAsync(ControllerUri, request);
+        loggedUserJson.Data.Should().BeNull();
+        loggedUserJson.IsSuccess.Should().BeFalse();
+        loggedUserJson.Error.Equals("Invalid email or username.");
+    }
 
-    //    // Assert
-    //    response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
-
-    //    var loggedUserJson = await DeserializeResponse<ResponseLoginJson>(response);
-
-    //    loggedUserJson.Name.Should().BeNull();
-    //    loggedUserJson.Token.Should().BeNull();
-    //}
 }

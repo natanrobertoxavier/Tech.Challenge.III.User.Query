@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\User.Query.Api\User.Query.Api.csproj" />
     <ProjectReference Include="..\User.Query.Communication\User.Query.Communication.csproj" />
     <ProjectReference Include="..\User.Query.Domain\User.Query.Domain.csproj" />
     <ProjectReference Include="..\User.Query.Infrastructure\User.Query.Infrastructure.csproj" />

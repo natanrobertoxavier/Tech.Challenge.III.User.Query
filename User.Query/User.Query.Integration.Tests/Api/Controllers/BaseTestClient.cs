@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Newtonsoft.Json;
-using System.Text;
-using System.Text.Json;
-using User.Query.Communication.Request;
 
 namespace User.Query.Integration.Tests.Api.Controllers;
 public abstract class BaseTestClient
