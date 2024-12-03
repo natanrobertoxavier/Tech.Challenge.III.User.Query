@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solutionitens", "solutionitens", "{9EB1DD4B-54F1-44F6-BB98-1BD8091988BE}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+		Dockerfile = Dockerfile
+		..\.github\workflows\pipeline.yaml = ..\.github\workflows\pipeline.yaml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B486D9C5-132C-4373-9FF7-B1C947F5BE23}"
 EndProject
