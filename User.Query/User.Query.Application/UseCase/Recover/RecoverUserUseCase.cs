@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using User.Query.Communication.Request;
 using User.Query.Communication.Response;
 using User.Query.Domain.Repositories;
 
@@ -9,15 +10,38 @@ public class RecoverUserUseCase(
 {
     private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOnlyRepository;
     private readonly ILogger _logger = logger;
-    private const string logMessageDefault = "of email user consultation.";
 
-    public async Task<Result<ResponseUserJson>> Execute(string email)
+    public async Task<Result<ResponseExistsUserJson>> ThereIsUserWithEmail(string email)
+    {
+        var output = new Result<ResponseExistsUserJson>();
+
+        try
+        {
+            _logger.Information($"Start {nameof(ThereIsUserWithEmail)}. User: {email}.");
+
+            var thereIsUser = await _userReadOnlyRepository.ThereIsUserWithEmailAsync(email);
+
+            _logger.Information($"End {nameof(ThereIsUserWithEmail)}. User: {email}.");
+
+            return output.Success(new ResponseExistsUserJson(thereIsUser));
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = string.Format("There are an error: {0}", ex.Message);
+
+            _logger.Error(ex, errorMessage);
+
+            return output.Failure(errorMessage); ;
+        }
+    }
+
+    public async Task<Result<ResponseUserJson>> RecoverByEmail(string email)
     {
         var output = new Result<ResponseUserJson>();
 
         try
         {
-            _logger.Information($"Start {logMessageDefault}");
+            _logger.Information($"Start {nameof(RecoverByEmail)}. User: {email}.");
 
             var user = await _userReadOnlyRepository.RecoverByEmailAsync(email);
 
@@ -30,7 +54,40 @@ public class RecoverUserUseCase(
                 return output.Failure(notFoundMessage); ;
             }
 
-            _logger.Information($"End {logMessageDefault}");
+            _logger.Information($"End {nameof(RecoverByEmail)}. User: {email}.");
+
+            return output.Success(new ResponseUserJson(user.Name, user.Email));
+        }
+        catch (Exception ex)
+        {
+            var errorMessage = string.Format("There are an error: {0}", ex.Message);
+
+            _logger.Error(ex, errorMessage);
+
+            return output.Failure(errorMessage); ;
+        }
+    }
+
+    public async Task<Result<ResponseUserJson>> RecoverEmailPassword(RequestLoginJson request)
+    {
+        var output = new Result<ResponseUserJson>();
+
+        try
+        {
+            _logger.Information($"Start {nameof(RecoverEmailPassword)}. User: {request.Email}.");
+
+            var user = await _userReadOnlyRepository.RecoverEmailPasswordAsync(request.Email, request.Password);
+
+            if (user is null)
+            {
+                var notFoundMessage = "Invalid email or username.";
+
+                _logger.Warning(notFoundMessage);
+
+                return output.Failure(notFoundMessage); ;
+            }
+
+            _logger.Information($"End {nameof(RecoverEmailPassword)}. User: {request.Email}.");
 
             return output.Success(new ResponseUserJson(user.Name, user.Email));
         }

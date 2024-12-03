@@ -6,6 +6,8 @@ using User.Query.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRouting(option => option.LowercaseUrls = true);
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
