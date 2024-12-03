@@ -19,7 +19,7 @@ public class UserController : TechChallengeController
     }
 
     [HttpGet("there-is-user/{email}")]
-    [ProducesResponseType(typeof(ResponseUserJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseExistsUserJson), StatusCodes.Status200OK)]
     public async Task<IActionResult> ThereIsUser(
         [FromServices] IRecoverUserUseCase useCase,
         [FromRoute] string email)
