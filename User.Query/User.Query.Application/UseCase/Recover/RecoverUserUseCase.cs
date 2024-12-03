@@ -68,7 +68,7 @@ public class RecoverUserUseCase(
         }
     }
 
-    public async Task<Result<ResponseUserJson>> RecoverEmailPassword(RequestLoginJson request)
+    public async Task<Result<ResponseUserJson>> RecoverEmailPassword(RequestEmailPasswordUserJson request)
     {
         var output = new Result<ResponseUserJson>();
 

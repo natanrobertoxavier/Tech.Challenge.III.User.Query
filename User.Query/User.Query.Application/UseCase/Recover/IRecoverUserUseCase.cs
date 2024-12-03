@@ -7,5 +7,5 @@ public interface IRecoverUserUseCase
 {
     Task<Result<ResponseExistsUserJson>> ThereIsUserWithEmail(string email);
     Task<Result<ResponseUserJson>> RecoverByEmail(string email);
-    Task<Result<ResponseUserJson>> RecoverEmailPassword(RequestLoginJson request);
+    Task<Result<ResponseUserJson>> RecoverEmailPassword(RequestEmailPasswordUserJson request);
 }

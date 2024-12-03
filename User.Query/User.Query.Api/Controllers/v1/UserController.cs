@@ -33,7 +33,7 @@ public class UserController : TechChallengeController
     [ProducesResponseType(typeof(ResponseUserJson), StatusCodes.Status200OK)]
     public async Task<IActionResult> RecoverByEmailAndPassword(
         [FromServices] IRecoverUserUseCase useCase,
-        [FromBody] RequestLoginJson request)
+        [FromBody] RequestEmailPasswordUserJson request)
     {
         var result = await useCase.RecoverEmailPassword(request);
 

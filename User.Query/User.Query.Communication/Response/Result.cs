@@ -5,11 +5,11 @@ public struct Result<T>(
     bool isSuccess,
     string error)
 {
-    public T Value { get; } = value;
+    public T Data { get; } = value;
     public bool IsSuccess { get; } = isSuccess;
     public string Error { get; } = error;
 
-    public Result<T> Success(T value) => new Result<T>(value, true, string.Empty);
+    public Result<T> Success(T data) => new Result<T>(data, true, string.Empty);
 
     public new Result<T> Failure(string error) => new Result<T>(default, false, error);
 }

@@ -1,5 +1,5 @@
 ﻿namespace User.Query.Communication.Request;
-public class RequestLoginJson(
+public class RequestEmailPasswordUserJson(
     string email, 
     string password)
 {
