@@ -80,7 +80,7 @@ public class RecoverUserUseCase(
 
             if (user is null)
             {
-                var notFoundMessage = "Invalid email or username.";
+                var notFoundMessage = "Email ou senha inválidos.";
 
                 _logger.Warning(notFoundMessage);
 

@@ -201,10 +201,10 @@ public class RecoverUserUseCaseTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal("Invalid email or username.", result.Error);
+        Assert.Equal("Email ou senha inválidos.", result.Error);
 
         _mockLogger.Verify(logger => logger.Information(It.Is<string>(s => s.Contains("Start"))), Times.Once);
-        _mockLogger.Verify(logger => logger.Warning(It.Is<string>(s => s.Contains("Invalid email or username."))), Times.Once);
+        _mockLogger.Verify(logger => logger.Warning(It.Is<string>(s => s.Contains("Email ou senha inválidos."))), Times.Once);
         _mockLogger.VerifyNoOtherCalls();
     }
 
