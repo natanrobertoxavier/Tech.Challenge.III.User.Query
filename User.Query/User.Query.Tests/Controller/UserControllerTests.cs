@@ -24,7 +24,7 @@ public class UserControllerTests
         // Arrange
         var email = "test@example.com";
 
-        var expectedResult = output.Success(new ResponseUserJson("Test User", email));
+        var expectedResult = output.Success(new ResponseUserJson(Guid.NewGuid(), DateTime.UtcNow, "Test User", email, "anypasswordencrypted"));
 
         _recoverUserUseCaseMock
             .Setup(useCase => useCase.RecoverByEmail(email))

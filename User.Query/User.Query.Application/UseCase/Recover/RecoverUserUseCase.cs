@@ -56,7 +56,7 @@ public class RecoverUserUseCase(
 
             _logger.Information($"End {nameof(RecoverByEmail)}. User: {email}.");
 
-            return output.Success(new ResponseUserJson(user.Name, user.Email));
+            return output.Success(new ResponseUserJson(user.Id, user.RegistrationDate, user.Name, user.Email, user.Password));
         }
         catch (Exception ex)
         {
@@ -89,7 +89,7 @@ public class RecoverUserUseCase(
 
             _logger.Information($"End {nameof(RecoverEmailPassword)}. User: {request.Email}.");
 
-            return output.Success(new ResponseUserJson(user.Name, user.Email));
+            return output.Success(new ResponseUserJson(user.Id, user.RegistrationDate, user.Name, user.Email, user.Password));
         }
         catch (Exception ex)
         {
