@@ -27,11 +27,11 @@ public class UserControllerTests
         var expectedResult = output.Success(new ResponseUserJson(Guid.NewGuid(), DateTime.UtcNow, "Test User", email, "anypasswordencrypted"));
 
         _recoverUserUseCaseMock
-            .Setup(useCase => useCase.RecoverByEmail(email))
+            .Setup(useCase => useCase.RecoverByEmailAsync(email))
             .ReturnsAsync(expectedResult);
 
         // Act
-        var result = await _controller.RecoverUser(_recoverUserUseCaseMock.Object, email);
+        var result = await _controller.RecoverUserAsync(_recoverUserUseCaseMock.Object, email);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -41,7 +41,7 @@ public class UserControllerTests
         Assert.Equal(expectedResult.Data.Name, actualResult.Data.Name);
         Assert.Equal(expectedResult.Data.Email, actualResult.Data.Email);
 
-        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmail(email), Times.Once);
+        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmailAsync(email), Times.Once);
     }
 
     [Fact]
@@ -53,11 +53,11 @@ public class UserControllerTests
         var expectedResult = output.Failure("User not found.");
 
         _recoverUserUseCaseMock
-            .Setup(useCase => useCase.RecoverByEmail(email))
+            .Setup(useCase => useCase.RecoverByEmailAsync(email))
             .ReturnsAsync(expectedResult);
 
         // Act
-        var result = await _controller.RecoverUser(_recoverUserUseCaseMock.Object, email);
+        var result = await _controller.RecoverUserAsync(_recoverUserUseCaseMock.Object, email);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -66,7 +66,7 @@ public class UserControllerTests
         Assert.False(actualResult.IsSuccess);
         Assert.Equal(expectedResult.Error, actualResult.Error);
 
-        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmail(email), Times.Once);
+        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmailAsync(email), Times.Once);
     }
 
     [Fact]
@@ -78,11 +78,11 @@ public class UserControllerTests
         var expectedResult = output.Failure("Any Error.");
 
         _recoverUserUseCaseMock
-            .Setup(useCase => useCase.RecoverByEmail(email))
+            .Setup(useCase => useCase.RecoverByEmailAsync(email))
             .ReturnsAsync(expectedResult);
 
         // Act
-        var result = await _controller.RecoverUser(_recoverUserUseCaseMock.Object, email);
+        var result = await _controller.RecoverUserAsync(_recoverUserUseCaseMock.Object, email);
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
@@ -91,6 +91,6 @@ public class UserControllerTests
         Assert.False(actualResult.IsSuccess);
         Assert.Equal(expectedResult.Error, actualResult.Error);
 
-        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmail(email), Times.Once);
+        _recoverUserUseCaseMock.Verify(useCase => useCase.RecoverByEmailAsync(email), Times.Once);
     }
 }

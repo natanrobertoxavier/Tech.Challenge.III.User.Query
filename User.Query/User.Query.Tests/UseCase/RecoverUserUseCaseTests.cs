@@ -31,7 +31,7 @@ public class RecoverUserUseCaseTests
             .ReturnsAsync(true);
 
         // Act
-        var result = await _useCase.ThereIsUserWithEmail(email);
+        var result = await _useCase.ThereIsUserWithEmailAsync(email);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -53,7 +53,7 @@ public class RecoverUserUseCaseTests
             .ReturnsAsync(false);
 
         // Act
-        var result = await _useCase.ThereIsUserWithEmail(email);
+        var result = await _useCase.ThereIsUserWithEmailAsync(email);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -77,7 +77,7 @@ public class RecoverUserUseCaseTests
             .ThrowsAsync(new Exception(exceptionMessage));
 
         // Act
-        var result = await _useCase.ThereIsUserWithEmail(email);
+        var result = await _useCase.ThereIsUserWithEmailAsync(email);
 
         // Assert
         Assert.False(result.IsSuccess);
@@ -101,7 +101,7 @@ public class RecoverUserUseCaseTests
             .ReturnsAsync(user);
 
         // Act
-        var result = await _useCase.RecoverByEmail(email);
+        var result = await _useCase.RecoverByEmailAsync(email);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -125,7 +125,7 @@ public class RecoverUserUseCaseTests
             .ReturnsAsync((Domain.Entities.User) null);
 
         // Act
-        var result = await _useCase.RecoverByEmail(email);
+        var result = await _useCase.RecoverByEmailAsync(email);
 
         // Assert
         Assert.False(result.IsSuccess);
@@ -149,7 +149,7 @@ public class RecoverUserUseCaseTests
             .ThrowsAsync(new Exception(exceptionMessage));
 
         // Act
-        var result = await _useCase.RecoverByEmail(email);
+        var result = await _useCase.RecoverByEmailAsync(email);
 
         // Assert
         Assert.False(result.IsSuccess);

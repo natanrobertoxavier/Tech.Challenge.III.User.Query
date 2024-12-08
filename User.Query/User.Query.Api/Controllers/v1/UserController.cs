@@ -8,30 +8,30 @@ namespace User.Query.Api.Controllers.v1;
 public class UserController : TechChallengeController
 {
     [HttpGet("{email}")]
-    [ProducesResponseType(typeof(ResponseUserJson), StatusCodes.Status200OK)]
-    public async Task<IActionResult> RecoverUser(
+    [ProducesResponseType(typeof(Result<ResponseUserJson>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> RecoverUserAsync(
         [FromServices] IRecoverUserUseCase useCase,
         [FromRoute] string email)
     {
-        var result = await useCase.RecoverByEmail(email);
+        var result = await useCase.RecoverByEmailAsync(email);
 
         return Ok(result);
     }
 
     [HttpGet("there-is-user/{email}")]
-    [ProducesResponseType(typeof(ResponseExistsUserJson), StatusCodes.Status200OK)]
-    public async Task<IActionResult> ThereIsUser(
+    [ProducesResponseType(typeof(Result<ResponseExistsUserJson>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> ThereIsUserAsync(
         [FromServices] IRecoverUserUseCase useCase,
         [FromRoute] string email)
     {
-        var result = await useCase.ThereIsUserWithEmail(email);
+        var result = await useCase.ThereIsUserWithEmailAsync(email);
 
         return Ok(result);
     }
 
     [HttpPost("recover-email-password")]
-    [ProducesResponseType(typeof(ResponseUserJson), StatusCodes.Status200OK)]
-    public async Task<IActionResult> RecoverByEmailAndPassword(
+    [ProducesResponseType(typeof(Result<ResponseUserJson>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> RecoverByEmailAndPasswordAsync(
         [FromServices] IRecoverUserUseCase useCase,
         [FromBody] RequestEmailPasswordUserJson request)
     {

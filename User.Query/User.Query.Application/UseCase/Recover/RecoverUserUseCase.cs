@@ -11,17 +11,17 @@ public class RecoverUserUseCase(
     private readonly IUserReadOnlyRepository _userReadOnlyRepository = userReadOnlyRepository;
     private readonly ILogger _logger = logger;
 
-    public async Task<Result<ResponseExistsUserJson>> ThereIsUserWithEmail(string email)
+    public async Task<Result<ResponseExistsUserJson>> ThereIsUserWithEmailAsync(string email)
     {
         var output = new Result<ResponseExistsUserJson>();
 
         try
         {
-            _logger.Information($"Start {nameof(ThereIsUserWithEmail)}. User: {email}.");
+            _logger.Information($"Start {nameof(ThereIsUserWithEmailAsync)}. User: {email}.");
 
             var thereIsUser = await _userReadOnlyRepository.ThereIsUserWithEmailAsync(email);
 
-            _logger.Information($"End {nameof(ThereIsUserWithEmail)}. User: {email}.");
+            _logger.Information($"End {nameof(ThereIsUserWithEmailAsync)}. User: {email}.");
 
             return output.Success(new ResponseExistsUserJson(thereIsUser));
         }
@@ -31,17 +31,17 @@ public class RecoverUserUseCase(
 
             _logger.Error(ex, errorMessage);
 
-            return output.Failure(errorMessage); ;
+            return output.Failure(errorMessage);
         }
     }
 
-    public async Task<Result<ResponseUserJson>> RecoverByEmail(string email)
+    public async Task<Result<ResponseUserJson>> RecoverByEmailAsync(string email)
     {
         var output = new Result<ResponseUserJson>();
 
         try
         {
-            _logger.Information($"Start {nameof(RecoverByEmail)}. User: {email}.");
+            _logger.Information($"Start {nameof(RecoverByEmailAsync)}. User: {email}.");
 
             var user = await _userReadOnlyRepository.RecoverByEmailAsync(email);
 
@@ -54,7 +54,7 @@ public class RecoverUserUseCase(
                 return output.Failure(notFoundMessage); ;
             }
 
-            _logger.Information($"End {nameof(RecoverByEmail)}. User: {email}.");
+            _logger.Information($"End {nameof(RecoverByEmailAsync)}. User: {email}.");
 
             return output.Success(new ResponseUserJson(user.Id, user.RegistrationDate, user.Name, user.Email, user.Password));
         }
