@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  myapp:
+  userquery:
     image: userquery:latest
     container_name: userquery_container
     ports:
