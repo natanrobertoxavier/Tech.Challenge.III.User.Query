@@ -25,12 +25,12 @@ jobs:
 
     - name: Check running user
       run: whoami
-
-    - name: Setup .NET Core SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '8.x'
-
+      
+    # removido pois no meu host já tenho as versões do dotnet instaladas
+    # - name: Setup .NET Core SDK
+    #   uses: actions/setup-dotnet@v3
+    #   with:
+    #     dotnet-version: '8.x'
 
     - name: Restore dependencies
       run: dotnet restore User.Query/User.Query.sln
