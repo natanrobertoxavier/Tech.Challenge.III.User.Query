@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  userquery:
+  userqueryapi:
     image: userquery:latest
     container_name: userquery_container
     ports:
