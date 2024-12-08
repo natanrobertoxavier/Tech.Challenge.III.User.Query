@@ -13,4 +13,4 @@ services:
 
 networks:
   techchallengenetwork:
-    driver: bridge
+    external: true
