@@ -8,3 +8,9 @@ services:
       - "5200:80"
     environment:
       ASPNETCORE_ENVIRONMENT: "HML"
+    networks:
+      - techchallengenetwork
+
+networks:
+  techchallengenetwork:
+    driver: bridge
