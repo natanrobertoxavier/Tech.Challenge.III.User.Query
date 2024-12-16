@@ -1,9 +1,7 @@
 ﻿using Moq;
 using Serilog;
-using TokenService.Manager.Controller;
 using User.Query.Application.UseCase.Recover;
 using User.Query.Communication.Request;
-using User.Query.Communication.Response;
 using User.Query.Domain.Repositories;
 
 namespace User.Query.Tests.UseCase;
@@ -122,7 +120,7 @@ public class RecoverUserUseCaseTests
 
         _mockUserReadOnlyRepository
             .Setup(repo => repo.RecoverByEmailAsync(email))
-            .ReturnsAsync((Domain.Entities.User) null);
+            .ReturnsAsync((Domain.Entities.User)null);
 
         // Act
         var result = await _useCase.RecoverByEmailAsync(email);
@@ -194,7 +192,7 @@ public class RecoverUserUseCaseTests
 
         _mockUserReadOnlyRepository
             .Setup(repo => repo.RecoverEmailPasswordAsync(request.Email, request.Password))
-            .ReturnsAsync((Domain.Entities.User) null);
+            .ReturnsAsync((Domain.Entities.User)null);
 
         // Act
         var result = await _useCase.RecoverEmailPassword(request);

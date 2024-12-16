@@ -7,12 +7,12 @@ public class UserRepository(
 {
     private readonly TechChallengeContext _context = context;
 
-    #pragma warning disable CS8603
+#pragma warning disable CS8603
 
     public async Task<bool> ThereIsUserWithEmailAsync(string email) =>
         await _context.Users.AnyAsync(c => c.Email.Equals(email));
 
-    public async Task<Domain.Entities.User> RecoverByEmailAsync(string email) => 
+    public async Task<Domain.Entities.User> RecoverByEmailAsync(string email) =>
         await _context.Users.AsNoTracking()
             .FirstOrDefaultAsync(c => c.Email.Equals(email));
 

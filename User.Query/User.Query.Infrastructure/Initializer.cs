@@ -17,7 +17,7 @@ public static class Initializer
         AddContext(services, configurationManager);
         AddRepositories(services);
     }
-        private static void AddFluentMigrator(IServiceCollection services, IConfiguration configurationManager)
+    private static void AddFluentMigrator(IServiceCollection services, IConfiguration configurationManager)
     {
         _ = bool.TryParse(configurationManager.GetSection("Settings:DatabaseInMemory").Value, out bool databaseInMemory);
 

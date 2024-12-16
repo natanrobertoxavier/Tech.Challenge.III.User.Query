@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using User.Query.Application.UseCase.Recover;
-using TokenService.Manager.Controller;
 using Serilog;
+using TokenService.Manager.Controller;
+using User.Query.Application.UseCase.Recover;
 
 namespace User.Query.Application;
 
